@@ -28,8 +28,8 @@ app.post('/fetch-logs', async (req, res) => {
     try {
         console.log(`[INFO] Fetching logs from ${url} for link type: ${link_type}`);
 
-        // For "lumma" type, use captcha solving with Puppeteer
-        if (link_type === 'lumma') {
+        // For "a" type, use captcha solving with Puppeteer
+        if (link_type === 'a') {
             // Use the provided API key for 2Captcha
             const solver = new Solver(api_key);
 
@@ -68,7 +68,7 @@ app.post('/fetch-logs', async (req, res) => {
                 ],
             });
 
-            console.log("[SUCCESS] Chromium started for lumma type.");
+            console.log("[SUCCESS] Chromium started for a type.");
 
             const page = await browser.newPage();
 
@@ -134,7 +134,7 @@ app.post('/fetch-logs', async (req, res) => {
 
             await browser.close();
             return res.json({ success: true, logsCount });
-        } else if (link_type === 'vidar') {
+        } else if (link_type === 'b') {
             // Launch Puppeteer with simpler settings
             const browser = await puppeteer.launch({
                 headless: 'new',
@@ -146,7 +146,7 @@ app.post('/fetch-logs', async (req, res) => {
                 ],
             });
         
-            console.log("[SUCCESS] Chromium started for vidar type.");
+            console.log("[SUCCESS] Chromium started for b type.");
         
             const page = await browser.newPage();
             await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -165,7 +165,7 @@ app.post('/fetch-logs', async (req, res) => {
             const logsCount = parseInt(rawText, 10);
             await browser.close();
             return res.json({ success: true, logsCount });
-        } else if (link_type === 'rhadamanthys') {
+        } else if (link_type === 'c') {
             // Launch Puppeteer with simpler settings
             const browser = await puppeteer.launch({
                 headless: 'new',
@@ -179,7 +179,7 @@ app.post('/fetch-logs', async (req, res) => {
                 ],
             });
             
-            console.log("[SUCCESS] Chromium started for rhadamanthys type.");
+            console.log("[SUCCESS] Chromium started for c type.");
             
             const page = await browser.newPage();
             await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -229,10 +229,10 @@ app.post('/fetch-logs', async (req, res) => {
                 return totalCount;
             });
             
-            console.log(`[DEBUG] Total logs count for rhadamanthys: ${logsCount}`);
+            console.log(`[DEBUG] Total logs count for c: ${logsCount}`);
             await browser.close();
             return res.json({ success: true, logsCount });
-        } else if (link_type === 'stealc') {
+        } else if (link_type === 'd') {
             const browser = await puppeteer.launch({
                 headless: 'new',
                 executablePath: '/usr/bin/google-chrome-stable',
@@ -243,7 +243,7 @@ app.post('/fetch-logs', async (req, res) => {
                 ],
             });
         
-            console.log("[SUCCESS] Chromium started for stealc type.");
+            console.log("[SUCCESS] Chromium started for d type.");
         
             const page = await browser.newPage();
             await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -255,7 +255,7 @@ app.post('/fetch-logs', async (req, res) => {
             }, { timeout: 20000 });
         
             const rawText = await page.$eval('h6#logs_count', el => el.innerText.trim());
-            console.log(`[DEBUG] Stealc logs text: "${rawText}"`);
+            console.log(`[DEBUG] D logs text: "${rawText}"`);
         
             const logsCount = parseInt(rawText, 10);
         
